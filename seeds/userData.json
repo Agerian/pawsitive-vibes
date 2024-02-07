@@ -1,0 +1,22 @@
+[
+    {
+      "username": "TheCheeseGrader",
+      "email": "user1@example.com",
+      "password": "password@1"
+    },
+    {
+      "username": "MinoTaurus",
+      "email": "user2@example.com",
+      "password": "password@2"
+    },
+    {
+        "username": "NPCinTheDark",
+        "email": "user3@example.com",
+        "password": "password@3"
+    },
+    {
+        "username": "TheSheePoster",
+        "email": "user4@example.com",
+        "password": "password@4"
+    }
+  ]
