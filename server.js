@@ -1,36 +1,32 @@
-const path = require('path');
-require('dotenv').config();
-const path = require('path');
+//Loads the express module
 const express = require('express');
-const session = require('express-session');
-const exphbs = require('express-handlebars');
-const routes = require('./controllers');
+// Loads the handlebars module
+const { engine } = require('express-handlebars');
 
-
-const sequelize = require('./config/connection');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+//Creates our express server
 const app = express();
-const PORT = process.env.PORT || 3001;
+const port = 3001;
 
-const sess = {
-    secret: 'Super secret secret',
-    cookie: {},
-    resave: false,
-    saveUninitialized: true,
-    store: new SequelizeStore({
-        db: sequelize
-    })
-};
 
-app.use(session(sess));
+// Sets handlebars configurations
+app.engine('handlebars', engine({
+  layoutsDir: __dirname + '/views/layouts',
+  defaultLayout: 'main'
+}));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+// Sets our app to use the handlebars engine
+app.set('view engine', 'handlebars');
 
-app.use(routes);
 
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
+//Serves static files (we need it to import a css file)
+app.use(express.static('public'))
+
+
+//Sets a basic route
+app.get('/', (req, res) => {
+    res.render('home');
 });
+
+
+//Makes the app listen to port 3000
+app.listen(port, () => console.log(`App listening to port ${port}`));
