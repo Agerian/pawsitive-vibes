@@ -1,3 +1,5 @@
-DROP DATABASE IF EXISTS paws_db;
+DROP DATABASE IF EXISTS pawsitive_vibes_db;
 
-CREATE DATABASE paws_db;
+CREATE DATABASE pawsitive_vibes_db;
+
+USE pawsitive_vibes_db;
