@@ -31,6 +31,10 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
+
 
 //Makes the app listen to port 3001
 app.listen(port, () => console.log(`App listening to port ${port}`));
