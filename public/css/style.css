@@ -30,3 +30,17 @@ body {
   padding: 50px;
   text-align: center;
 }
+
+.dashboard {
+  margin: 40px;
+}
+
+.dashboard .welcome,
+.dashboard .actions,
+.dashboard .recent-activity {
+  margin-bottom: 20px;
+}
+
+dashboard .empty-message {
+  color: #777;
+}
