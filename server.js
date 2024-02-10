@@ -50,14 +50,10 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard');
 });
 
-app.post('/test-user', async (req, res) => {
+app.post('/signup', async (req, res) => {
   console.log("Recieved User Body:", req.body);
   try {
-    const userData = await User.create({
-      username: 'testuser',
-      email: 'test@test.com',
-      password: 'P@ssword1'
-  });
+    const userData = await User.create(req.body);
   res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
