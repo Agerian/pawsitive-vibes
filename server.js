@@ -5,6 +5,8 @@ const { engine } = require('express-handlebars');
 // Loads the sequelize module
 const sequelize = require('./config/connection');
 const bcrypt = require('bcrypt');
+const withAuth = require('./utils/auth');
+
 
 // Loads the session module
 const session = require('express-session');
@@ -59,7 +61,8 @@ app.use((req, res, next) => {
 
 //Sets a basic route
 app.get('/', (req, res) => {
-    res.render('home');
+  loggedIn = req.session.loggedIn;
+    res.render('home', {loggedIn});
 });
 
 app.get('/signup', (req, res) => {
@@ -78,7 +81,7 @@ app.post('/api/signup', async (req, res) => {
     // Start a session for the newly created user
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.logged_in = true;
+      req.session.loggedIn = true;
       res.status(200).json(userData);
     });
 
@@ -86,7 +89,6 @@ app.post('/api/signup', async (req, res) => {
     res.status(400).json(err);
   }
 });
-
 
 // GET LOGIN
 // GET the login page ('/login')
@@ -137,6 +139,22 @@ app.post('/api/login', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while logging in' });
   }
 });
+
+//Logout
+// User Logout ('/api/user/logout')
+app.post('/api/logout', async (req, res) => {
+  console.log('Logout request recieved:', req.session)
+  if (req.session.loggedIn) {
+//      console.log('Destroying session:', req.session.id)
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    console.log('No session to destroy')
+    res.status(404).end();
+  }
+});
+
 
 
 
