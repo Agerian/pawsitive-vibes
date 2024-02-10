@@ -1,36 +1,69 @@
-const path = require('path');
-require('dotenv').config();
-const path = require('path');
+//Loads the express module
 const express = require('express');
-const session = require('express-session');
-const exphbs = require('express-handlebars');
-const routes = require('./controllers');
-//if we use helpers we need to add| const helpers = require('./utils/helpers'); and const hbs = exphbs.create({ helpers });
-
+// Loads the handlebars module
+const { engine } = require('express-handlebars');
+// Loads the sequelize module
 const sequelize = require('./config/connection');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+//Creates our express server
 const app = express();
-const PORT = process.env.PORT || 3001;
+const port = 3001;
 
-const sess = {
-    secret: 'Super secret secret',
-    cookie: {},
-    resave: false,
-    saveUninitialized: true,
-    store: new SequelizeStore({
-        db: sequelize
-    })
-};
+// Loads the sequelize module
+const User = require('./models/User');
 
-app.use(session(sess));
+sequelize.sync();
+
+
+// Sets handlebars configurations
+app.engine('handlebars', engine({
+  layoutsDir: __dirname + '/views/layouts',
+  defaultLayout: 'main'
+}));
+
+// Sets our app to use the handlebars engine
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+//Serves static files (we need it to import a css file)
+app.use(express.static('public'))
 
-app.use(routes);
+//Logs the request method, the requested URL, and the time it took to process the request
+// Temporary for diagnostics
+app.use((req, res, next) => {
+  console.log("complete Raw Body:", req.body, typeof req.body);
+  next();
+})
 
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
+
+//Sets a basic route
+app.get('/', (req, res) => {
+    res.render('home');
 });
+
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
+
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
+
+app.post('/test-user', async (req, res) => {
+  console.log("Recieved User Body:", req.body);
+  try {
+    const userData = await User.create({
+      username: 'testuser',
+      email: 'test@test.com',
+      password: 'P@ssword1'
+  });
+  res.status(200).json(userData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+
+//Makes the app listen to port 3001
+app.listen(port, () => console.log(`App listening to port ${port}`));
