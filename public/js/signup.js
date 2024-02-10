@@ -1,3 +1,4 @@
+
 const signupFormHandler = async (event) => {
   event.preventDefault();
 
@@ -7,7 +8,7 @@ const signupFormHandler = async (event) => {
 
   if (username && email && password) {
     // 'fetch' call to send Post request to the backend
-    const response = await fetch('/test-user', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
       body: JSON.stringify({ username, email, password }),
       headers: { 'Content-Type': 'application/json' },
@@ -15,7 +16,7 @@ const signupFormHandler = async (event) => {
 
     if (response.ok) {
       // Succesful Signup: (Replace with desired action, such as redirecting to dashboard.)
-      document.location.replace('/home');
+      document.location.replace('/');
     } else {
       // Singup Failure: (Handle response errors)
       alert('Failed to sign up');
