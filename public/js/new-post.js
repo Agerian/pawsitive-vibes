@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         title: document.getElementById('post-title').value.trim(),
         content: document.getElementById('post-content').value.trim(),
       };
-
+      console.log(postData,"Post Data")
       // Send a POST request to the server
       fetch('/api/posts', {
         method: 'POST',
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       .then((response) => response.json())
       .then((data) => {
         alert('Post created successfully!');
-        window.location.href = '/';
+        window.location.href = '/dashboard'; //added dashboard josh
       })
       .catch((error) => {
         console.error('Error:', error);

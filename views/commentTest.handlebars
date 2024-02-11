@@ -15,9 +15,11 @@
   {{/if}}
 
   <h3>Add a New Comment:</h3>
-  <form method="POST" action="api/posts/{{post.id}}/comments"> 
-    <textarea name="content" placeholder="Enter new comment here"></textarea> 
-    <button type="submit">Submit</button> 
+  
+    <textarea name="content" class="comment-text" placeholder="Enter new comment here"></textarea> 
+    <button class="commbutton" type="submit">Submit</button> 
   </form> 
 
 {{/each}}
+
+<script src="/js/comment.js"></script>

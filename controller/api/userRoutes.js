@@ -8,11 +8,12 @@ router.post('/signup', async (req, res) => {
   console.log("Recieved User Body:", req.body);
   try {
     const userData = await User.create(req.body);
-
+    console.log("User Data:", userData);
     // Start a session for the newly created user
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
+      console.log(req.session);
       res.status(200).json(userData);
     });
 
@@ -74,13 +75,13 @@ router.post('/logout', async (req, res) => {
 
 //Create a new post ('/api/post')
 router.post('/posts', async (req, res) => {
-  console.log("post route hit");
+  console.log("post route hit",req.session);
   if (!req.session.loggedIn) {
     res.status(401).json({ message: 'You must be logged in to create a post' });
     return;
   }
   try {
-    console.log("try block hit");
+    console.log("try block hit",req.body);
     const newPostData = await Post.create({
       title: req.body.title,
       content: req.body.content,
@@ -106,7 +107,7 @@ router.post('/posts/:post_id/comments', async (req, res) => {
         // 1. Extracting Comment Details & Post ID
         const { content } = req.body; // Assumes you send content of a comment in the body 
         const postId = req.params.post_id;
-
+        console.log("Post ID:", postId,content,req.session.user_id);
         // 2. Validating Input (Security Aspect!) 
         if (!content || content.trim() === "" ) { 
               res.status(400).json({ message: 'Please provide  non-empty content'}); 
@@ -131,7 +132,7 @@ router.post('/posts/:post_id/comments', async (req, res) => {
         res.status(201).json(newComment); // Simple confirmation on creation for now - AJAX for updates in future etc.)
         alert("Comment added successfully!"); 
   } catch (err) {
-    alert("Error adding comment, please contact an administrator if the issue persists");
+    console.log("Error adding comment, please contact an administrator if the issue persists");
      console.error(err);
      res.status(500).json({ error: 'Failed to add the comment, please contact an administrator if the issue persists)' });
 }});
