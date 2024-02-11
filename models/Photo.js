@@ -4,18 +4,13 @@ const sequelize = require('../config/connection');
 class Photo extends Model { }
 
 Photo.init({
+    
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     },
-    //add other needed attributes here. Need to get with Daniel for this one.
-    /* below is example of url: (may not need at all)
-        url: {
-        type: DataTypes.STRING,
-        allowNull: false
-    */
     user_id: {
         type: DataTypes.INTEGER,
         allowNull:false,
@@ -31,7 +26,11 @@ Photo.init({
             model: 'post',
             key: 'id'
         }
-    }
+    },
+        photoURL: {
+            type: DataTypes.STRING,
+            allowNull: false,
+    },
 }, {
     sequelize,
     modelName: 'photo',
@@ -41,4 +40,3 @@ Photo.init({
 });
 
 module.exports = Photo;
-
