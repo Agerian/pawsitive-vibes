@@ -1,16 +1,25 @@
-<div class="dashboard">
 
-  <div class="welcome">
-   <h1>Welcome, {{username}}!</h1>
-    <p>Share your love of pets with the world.</p>
-  </div>
+{{#each posts as |post|}}  
+  <h2>{{post.title}}</h2> 
+  <p>{{post.content}}</p>
 
-  <div class="actions">
-    <button class="add-photo">Upload Your First Photo</button>
-  </div>
+  <h3>Comments:</h3>
+  {{#if post.comments}} {{!-- Only display if 'comments' list has data --}}
+    <ul> 
+      {{#each post.comments as |comment|}} 
+        <li>{{comment.content}}</li> 
+      {{/each}} 
+    </ul> 
+  {{else}} {{!-- Display No comments message --}}
+    <p>No comments posted yet for this entry!</p> 
+  {{/if}}
 
-  <div class="recent-activity">
-    <h2>Your Recent Activity</h2>
-    <p class="empty-message">You haven't shared any content yet.</p>
-  </div>
-</div>
+  <h3>Add a New Comment:</h3>
+  
+    <textarea name="content" class="comment-text" placeholder="Enter new comment here"></textarea> 
+    <button class="commbutton" type="submit">Submit</button> 
+  </form> 
+
+{{/each}}
+
+<script src="/js/comment.js"></script>
