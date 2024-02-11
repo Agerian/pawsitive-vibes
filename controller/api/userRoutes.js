@@ -3,7 +3,7 @@ const { User, Post, Comment, Photo} = require('../../models');
 const bcrypt = require('bcrypt');
 const withAuth = require('../../utils/auth');
 
-// User Signup ('/api/user/signup'
+// User Signup ('/api/signup'
 router.post('/signup', async (req, res) => {
   console.log("Recieved User Body:", req.body);
   try {
@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// User Login ('/api/user/login')
+// User Login ('/api/login')
 router.post('/login', async (req, res) => {
   try {
     console.log('Login request body:', req.body);
@@ -59,7 +59,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// User Logout ('/api/user/logout')
+// User Logout ('/api/logout')
 router.post('/logout', async (req, res) => {
   console.log('Logout request recieved:', req.session)
   if (req.session.loggedIn) {
@@ -72,7 +72,7 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-//Create a new post ('/api/user/post')
+//Create a new post ('/api/post')
 router.post('/posts', async (req, res) => {
   console.log("post route hit");
   if (!req.session.loggedIn) {
@@ -93,6 +93,6 @@ router.post('/posts', async (req, res) => {
   }
 });
 
-
+// Update a post ('/api/user/posts/:id')
 
 module.exports = router;
