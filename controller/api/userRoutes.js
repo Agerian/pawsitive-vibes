@@ -93,6 +93,47 @@ router.post('/posts', async (req, res) => {
   }
 });
 
-// Update a post ('/api/user/posts/:id')
+//test for comments //made by josh may need to alter or delete later. testing purposes.
+
+// ========= POST (For creating)  comments=========
+router.post('/posts/:post_id/comments', async (req, res) => { 
+  try {
+        if (!req.session.loggedIn) { // Add login requirement if needed... 
+              res.status(401).json({ message: 'Login required for commenting!'}); 
+              return; 
+        } 
+
+        // 1. Extracting Comment Details & Post ID
+        const { content } = req.body; // Assumes you send content of a comment in the body 
+        const postId = req.params.post_id;
+
+        // 2. Validating Input (Security Aspect!) 
+        if (!content || content.trim() === "" ) { 
+              res.status(400).json({ message: 'Please provide  non-empty content'}); 
+              return; 
+        }      
+
+        // 3. Fetch the Post for Association (Important!) 
+        const thePost = await Post.findByPk(postId); 
+        if (!thePost) { 
+             res.status(404).json({ message: 'Post not found, cannot associate a comment!' }); 
+             return; 
+        }  
+
+        // 4. Creation with Sequelize - Associating!
+        const newComment = await Comment.create({ 
+              content, 
+              user_id: req.session.user_id, // Get from session - login must associate the ID if in use 
+              post_id: postId, 
+         }); 
+
+        // 5. Success Handling: Response Choice 
+        res.status(201).json(newComment); // Simple confirmation on creation for now - AJAX for updates in future etc.)
+        alert("Comment added successfully!"); 
+  } catch (err) {
+    alert("Error adding comment, please contact an administrator if the issue persists");
+     console.error(err);
+     res.status(500).json({ error: 'Failed to add the comment, please contact an administrator if the issue persists)' });
+}});
 
 module.exports = router;
