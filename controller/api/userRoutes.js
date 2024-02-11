@@ -55,6 +55,7 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.log('Login error:', err);
     res.status(500).json({ error: 'An error occurred while logging in' });
+      console.log('Login request body:', req.body);
   }
 });
 
@@ -62,7 +63,6 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async (req, res) => {
   console.log('Logout request recieved:', req.session)
   if (req.session.loggedIn) {
-    //      console.log('Destroying session:', req.session.id)
     req.session.destroy(() => {
       res.status(204).end();
     });
@@ -72,7 +72,7 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-// Create a new post ('/api/user/post') //added by josh for deletion purposes if doesnt work later
+//Create a new post ('/api/user/post')
 router.post('/posts', async (req, res) => {
   console.log("post route hit");
   if (!req.session.loggedIn) {

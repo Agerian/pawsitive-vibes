@@ -1,26 +1,4 @@
-<<<<<<< HEAD
-const express = require('express');
-const router = express.Router();
 
-
-// Route Functions
-//home
-router.get('/', (req, res) => {
-    res.render('home');
-});
-
-//signup
-router.get('/signup', (req, res) => {
-    res.render('signup');
-});
-
-//dashboard
-router.get('/dashboard', (req, res) => {
-    res.render('dashboard');
-  });
-
-// Export
-=======
 const router = require('express').Router();
 const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/auth');
@@ -49,7 +27,9 @@ router.get('/login', (req, res) => {
   }
   res.render('login');
 });
+// Get post page //added by josh for deletion purposes if doesnt work later
+router.get('/post', (req, res) => {
+  res.render('post');
+});
 
-
->>>>>>> origin
 module.exports = router;
