@@ -1,3 +1,4 @@
+
 const router = require('express').Router();
 const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/auth');
@@ -26,6 +27,9 @@ router.get('/login', (req, res) => {
   }
   res.render('login');
 });
-
+// Get post page //added by josh for deletion purposes if doesnt work later
+router.get('/post', (req, res) => {
+  res.render('post');
+});
 
 module.exports = router;

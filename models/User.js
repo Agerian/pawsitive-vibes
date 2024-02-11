@@ -49,7 +49,7 @@ User.init({
             },
             beforeUpdate: async (user) => {
                 if (user.changed('password')) {
-                    user.password = await bcrypt.hash(user.password, 10); //may want to change user to updatedUserData for naming convention
+                    user.password = await bcrypt.hash(user.password, 10); //may want to change user to user for naming convention
                 }
                 return user;
             },
