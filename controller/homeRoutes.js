@@ -10,23 +10,30 @@ router.get('/', (req, res) => {
 });
 
 // Get signup page
-router.get('/signup', (req, res) => {
-  res.render('signup');
+router.get("/signup", async (req, res) => {
+  res.render("signup", {
+    loggedIn: req.session.loggedIn,
+    loggedInUserData: req.session.loggedInUserData,
+  });
 });
 
+
 // Get dashboard page
-router.get('/dashboard', (req, res) => {
-res.render('dashboard');
+router.get('/dashboard', withAuth, async (req, res) => {
+  res.render('dashboard', {
+    loggedIn: req.session.loggedIn,
+    loggedInUserData: req.session.loggedInUserData,
+});
 });
 
 // Get login page
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-      res.redirect('/');
-      return;
-  }
-  res.render('login');
+router.get("/login", async (req, res) => {
+  res.render("login", {
+    loggedIn: req.session.loggedIn,
+    loggedInUserData: req.session.loggedInUserData,
+  });
 });
+
 // Get post page //added by josh for deletion purposes if doesnt work later
 router.get('/post', (req, res) => {
   res.render('post');
