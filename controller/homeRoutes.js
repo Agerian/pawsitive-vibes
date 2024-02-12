@@ -36,27 +36,36 @@ router.get("/login", async (req, res) => {
 
 // Get post page //added by josh for deletion purposes if doesnt work later
 router.get('/post', (req, res) => {
-  res.render('post');
+  res.render('post', {
+    loggedIn: req.session.loggedIn,
+    loggedInUserData: req.session.loggedInUserData,
+  });
 });
 
 
 //added by josh for comments. //may need to delete later
 // ======= 'commentTest' Rendering Logic  =========
-router.get('/commentTest', async (req, res) => {
+router.get('/commentTest', withAuth, async (req, res) => {
   try {
     // 1. Fetching Post Data (Simulating Actual Usage)
-    const postData = await Post.findAll({ // Sequelize fetch - Adjust query as needed!
-      include: [  // Eager loading with comments if defined in associations as 'post.hasMany(Comment)' in models!
-        { model: Comment } // Assuming a 'Comment' Model has been defined with the right relationship 
-     ],
-     // Add  where clauses, order options as you see fit for sorting etc.!  
+    const postData = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username'],
+        },
+      ],
     });
 
     // 2. Preparing Data for Handlebars
     const posts = postData.map(post => post.get({ plain: true })); // Serialize as simpler JS to render! 
 
     // 3. Rending the Test View! 
-    res.render('commentTest', { posts });
+    res.render('commentTest', {
+      loggedIn: req.session.loggedIn,
+      loggedInUserData: req.session.loggedInUserData,
+      posts: posts,
+    });
 
   } catch (err) {
     console.error(err);
