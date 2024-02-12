@@ -36,7 +36,10 @@ router.get("/login", async (req, res) => {
 
 // Get post page //added by josh for deletion purposes if doesnt work later
 router.get('/post', (req, res) => {
-  res.render('post');
+  res.render('post', {
+    loggedIn: req.session.loggedIn,
+    loggedInUserData: req.session.loggedInUserData,
+  });
 });
 
 
@@ -56,7 +59,11 @@ router.get('/commentTest', async (req, res) => {
     const posts = postData.map(post => post.get({ plain: true })); // Serialize as simpler JS to render! 
 
     // 3. Rending the Test View! 
-    res.render('commentTest', { posts });
+    res.render('commentTest', {
+      loggedIn: req.session.loggedIn,
+      loggedInUserData: req.session.loggedInUserData,
+      posts: posts,
+    });
 
   } catch (err) {
     console.error(err);
