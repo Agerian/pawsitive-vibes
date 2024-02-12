@@ -1,3 +1,4 @@
+/* Future update, to allow users to upload their own pictures
 const api_key = "442343569214466"
 const cloud_name = "dvd3v2z61"
 
