@@ -1,0 +1,46 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: #f8f8f8;
+}
+
+.hero {
+  background-image: url('/images/hero-bg.jpg'); /* placeholder */
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: white;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3em;
+}
+
+.signup {
+  background-color: #4caF50;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.intro {
+  padding: 50px;
+  text-align: center;
+}
+
+.dashboard {
+  margin: 40px;
+}
+
+.dashboard .welcome,
+.dashboard .actions,
+.dashboard .recent-activity {
+  margin-bottom: 20px;
+}
+
+dashboard .empty-message {
+  color: #777;
+}

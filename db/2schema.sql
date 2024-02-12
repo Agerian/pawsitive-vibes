@@ -4,12 +4,7 @@ CREATE TABLE user (
   name VARCHAR(50) NOT NULL,
   email VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(50) NOT NULL,
-  phone VARCHAR(15),
-  address VARCHAR(100),
-  pet_name VARCHAR(50),
-  pet_type VARCHAR(20),
-  pet_breed VARCHAR(20),
-  pet_age INT
+ 
 );
 
 -- Create the post table
@@ -17,8 +12,8 @@ CREATE TABLE post (
   id INT PRIMARY KEY, -- a unique identifier for each post
   title VARCHAR(255) NOT NULL, -- the title of the post
   content TEXT NOT NULL, -- the content of the post
-  author_id INT NOT NULL, -- the id of the author who wrote the post
-  date DATE NOT NULL, -- the date when the post was published
+  user_id INT NOT NULL, -- the id of the author who wrote the post
+  date DATE NULL, -- the date when the post was published
   category VARCHAR(255), -- the category of the post, such as dog, cat, etc.
   FOREIGN KEY (author_id) REFERENCES author(id) -- a reference to the author table
 );
