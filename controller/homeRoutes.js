@@ -45,16 +45,14 @@ router.get('/post', (req, res) => {
 
 //added by josh for comments. //may need to delete later
 // ======= 'commentTest' Rendering Logic  =========
-router.get('/commentTest', withAuth, async (req, res) => {
+router.get('/commentTest', async (req, res) => {
   try {
     // 1. Fetching Post Data (Simulating Actual Usage)
-    const postData = await Post.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'username'],
-        },
-      ],
+    const postData = await Post.findAll({ // Sequelize fetch - Adjust query as needed!
+      include: [  // Eager loading with comments if defined in associations as 'post.hasMany(Comment)' in models!
+        { model: Comment } // Assuming a 'Comment' Model has been defined with the right relationship 
+     ],
+     // Add  where clauses, order options as you see fit for sorting etc.!  
     });
 
     // 2. Preparing Data for Handlebars
