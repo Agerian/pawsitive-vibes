@@ -3,11 +3,13 @@ const { User } = require('../models');
 const userSeedData = require('./userData.json');
 const seedPosts = require('./post-seeds');
 const seedComments = require('./comment-seeds');
+const seedPhotos = require('./photo-seeds')
 
 const seedDatabase = async () => {
     await sequelize.sync({ force: true }); //after testing may need to set to false
     await User.bulkCreate(userSeedData);
     await seedPosts();
+    await seedPhotos();
     await seedComments();
 
     process.exit(0);

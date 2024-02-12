@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const Photo = require('./Photo');
 
 class Post extends Model { }
 
@@ -32,6 +33,11 @@ Post.init({
     timestamps: false,
     freezeTableName: true,
     underscored: true,
+});
+
+Post.hasMany(Photo, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
 });
 
 module.exports = Post;

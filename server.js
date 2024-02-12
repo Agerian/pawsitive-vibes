@@ -4,6 +4,24 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 // Loads the sequelize module
 const sequelize = require('./config/connection');
+// Loads the routes module
+const routes = require('./controller');
+
+// Loads the session module
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+
+//Sets up the session
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  }),
+};
 
 //Creates our express server
 const app = express();
@@ -13,6 +31,9 @@ const port = 3001;
 const User = require('./models/User');
 
 sequelize.sync();
+
+// Middleware enabling session use
+app.use(session(sess));
 
 
 // Sets handlebars configurations
@@ -29,41 +50,8 @@ app.use(express.urlencoded({ extended: false }));
 //Serves static files (we need it to import a css file)
 app.use(express.static('public'))
 
-//Logs the request method, the requested URL, and the time it took to process the request
-// Temporary for diagnostics
-app.use((req, res, next) => {
-  console.log("complete Raw Body:", req.body, typeof req.body);
-  next();
-})
-
-
-//Sets a basic route
-app.get('/', (req, res) => {
-    res.render('home');
-});
-
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
-
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard');
-});
-
-app.post('/test-user', async (req, res) => {
-  console.log("Recieved User Body:", req.body);
-  try {
-    const userData = await User.create({
-      username: 'testuser',
-      email: 'test@test.com',
-      password: 'P@ssword1'
-  });
-  res.status(200).json(userData);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
+// Sets the app to use the routes in the routes.js file
+app.use(routes);
 
 //Makes the app listen to port 3001
 app.listen(port, () => console.log(`App listening to port ${port}`));
