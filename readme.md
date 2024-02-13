@@ -41,8 +41,8 @@ Once the server is running, you can access Pawsitive Vibes by navigating to `htt
   -Email: ezereading@gmail.com
 
 * Daniel Horner
-  -GitHub: 
-  -Email:
+  -GitHub: https://github.com/Dhorner531
+  -Email: raidersbite@gmail.com
 
 * Brian Groos
   -GitHub: 
