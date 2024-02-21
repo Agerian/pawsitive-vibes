@@ -20,6 +20,7 @@ This is a simple web application that allows users to view and post pictures of 
 4. Set up your environment variables in a `.env` file.
 5. Initialize the database by running `mysql -u root -p` and then `source db/schema.sql` in the MySQL shell.
 6. (Optional) Seed the database by running `npm run seed`.
+7. can visit the working page https://radiant-headland-87815-d00a9ddc5aa4.herokuapp.com/
 
 ## Usage
 
@@ -33,8 +34,8 @@ Once the server is running, you can access Pawsitive Vibes by navigating to `htt
 ## Contributing
 
 * Josh Dow
-  -GitHub: 
-  -Email:
+  -GitHub: https://github.com/spatiallyabsent
+  -Email:  joshuadow@yahoo.com
 
 * Adrian Ortiz
   -GitHub: https://github.com/Agerian
